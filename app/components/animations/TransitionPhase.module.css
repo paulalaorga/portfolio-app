@@ -1,0 +1,107 @@
+/* components/animations/TransitionPhase.module.css */
+
+.transitionContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+  background-color: rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Main vertical glitch bars */
+.verticalGlitch {
+  position: absolute;
+  top: 0;
+  width: 20vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.glitchContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(0deg, rgba(0, 240, 255, 0.7), rgba(0, 240, 255, 0.3));
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+}
+
+/* Additional glitch elements */
+.horizontalGlitch {
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  background-color: rgba(255, 0, 153, 0.8);
+  box-shadow: 0 0 10px rgba(255, 0, 153, 0.6);
+  transform-origin: center;
+}
+
+.noiseOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.textGlitch {
+  position: absolute;
+  font-family: 'Space Mono', monospace;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  opacity: 0;
+  font-weight: bold;
+  text-shadow: 0 0 5px currentColor;
+  white-space: nowrap;
+}
+
+/* Add glitchy animation to text */
+.textGlitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 3px;
+  width: 100%;
+  height: 100%;
+  color: rgba(255, 255, 0, 0.8);
+  opacity: 0.6;
+}
+
+.textGlitch::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: -3px;
+  width: 100%;
+  height: 100%;
+  color: rgba(0, 240, 255, 0.8);
+  opacity: 0.6;
+}
+
+/* Glitchy flicker animation for text elements */
+@keyframes flicker {
+  0% { opacity: 0.9; }
+  5% { opacity: 0.2; }
+  10% { opacity: 0.9; }
+  15% { opacity: 0.8; }
+  20% { opacity: 0.1; }
+  25% { opacity: 0.9; }
+  30% { opacity: 0.7; }
+  35% { opacity: 0.2; }
+  40% { opacity: 0.8; }
+  45% { opacity: 0.3; }
+  50% { opacity: 0.9; }
+  55% { opacity: 0.8; }
+  60% { opacity: 0.1; }
+  70% { opacity: 0.9; }
+  80% { opacity: 0.2; }
+  90% { opacity: 0.7; }
+  100% { opacity: 0.9; }
+}

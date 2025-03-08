@@ -1,8 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from 'next'
-import AnimationController from './components/animations/AnimationController'
-import CustomCursor from './components/ui/CustomCursor'
 import { Space_Mono, Syne } from 'next/font/google'
+import AnimationController from './components/animations/AnimationController'
 import './globals.css'
 
 const spaceMono = Space_Mono({
@@ -30,7 +29,6 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${spaceMono.variable} ${syne.variable}`}>
       <body className="bg-background text-foreground">
-        <CustomCursor />
         <AnimationController>
           {children}
         </AnimationController>

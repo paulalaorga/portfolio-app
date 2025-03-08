@@ -16,7 +16,9 @@ const tailwindConfig = {
         'secondary-glow': 'rgba(255, 0, 153, 0.6)',
         accent: '#ffff00',
         'accent-glow': 'rgba(255, 255, 0, 0.6)',
-        muted: '#666666'
+        muted: '#666666',
+        'cyan-400': '#00f0ff',
+        'pink-500': '#ff0099',
       },
       fontFamily: {
         mono: ['Space Mono', 'monospace'],
