@@ -1,0 +1,29 @@
+/* components/effects/VerticalGlitchTransition.module.css */
+.transitionContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 30;
+    pointer-events: none;
+  }
+  
+  .verticalGlitch {
+    position: absolute;
+    top: 0;
+    width: 20vw;
+    height: 100vh;
+    background-color: transparent;
+    overflow: hidden;
+  }
+  
+  .glitchFill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00f0ff;
+    opacity: 0.5;
+  }

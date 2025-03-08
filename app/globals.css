@@ -1,0 +1,175 @@
+/* app/globals.css */
+@import "tailwindcss/preflight.css";
+@import "tailwindcss/utilities.css";
+
+:root {
+  --primary: #00f0ff;
+  --secondary: #ff0099;
+  --accent: #ffff00;
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary-glow: rgba(0, 240, 255, 0.6);
+  --secondary-glow: rgba(255, 0, 153, 0.6);
+  --accent-glow: rgba(255, 255, 0, 0.6);
+  --muted: #666666;
+}
+
+/* Base styles */
+html, body {
+  background-color: var(--background);
+  color: var(--foreground);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: 'Roboto', sans-serif;
+  align-self: center;
+}
+
+/* Custom cursor */
+.cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, background-color 0.3s;
+}
+
+.cursor-follower {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s, width 0.3s, height 0.3s, border 0.3s;
+}
+
+.cursor.active {
+  width: 50px;
+  height: 50px;
+  background-color: var(--secondary);
+}
+
+.cursor-follower.active {
+  width: 30px;
+  height: 30px;
+  border-color: var(--secondary);
+}
+
+/* Noise overlay */
+.noise-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
+  opacity: 0.1;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Explicit scanner animation */
+@keyframes scan {
+  0% {
+    transform: translateY(0%);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(50vh);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0.5;
+  }
+}
+
+.animate-scan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  animation-name: scan;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* Glitch effect with more explicit properties */
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--secondary);
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim-1 5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  left: -2px;
+  text-shadow: -2px 0 var(--accent);
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim-2 1s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% {
+    clip: rect(5px, 9999px, 85px, 0);
+  }
+  25% {
+    clip: rect(35px, 9999px, 30px, 0);
+  }
+  50% {
+    clip: rect(55px, 9999px, 96px, 0);
+  }
+  75% {
+    clip: rect(15px, 9999px, 50px, 0);
+  }
+  100% {
+    clip: rect(75px, 9999px, 5px, 0);
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip: rect(65px, 9999px, 15px, 0);
+  }
+  25% {
+    clip: rect(25px, 9999px, 70px, 0);
+  }
+  50% {
+    clip: rect(45px, 9999px, 36px, 0);
+  }
+  75% {
+    clip: rect(65px, 9999px, 20px, 0);
+  }
+  100% {
+    clip: rect(85px, 9999px, 65px, 0);
+  }
+}
