@@ -1,0 +1,454 @@
+.terminalContainer {
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  overflow: visible;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.1),
+              inset 0 0 15px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 2rem;
+  max-height: 100%;
+}
+
+.terminalContainer:hover {
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.2),
+              inset 0 0 15px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.terminalContainer.collapsed {
+  transform: translateY(0);
+  margin-bottom: 1rem;
+}
+
+.terminalContainer.collapsed:hover {
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.15),
+              inset 0 0 15px rgba(0, 0, 0, 0.5);
+  transform: translateY(-1px);
+}
+
+.terminalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(90deg, 
+    rgba(0, 240, 255, 0.1) 0%, 
+    rgba(0, 0, 0, 0.2) 50%, 
+    rgba(255, 0, 153, 0.1) 100%);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.terminalHeader:hover {
+  background: linear-gradient(90deg, 
+    rgba(0, 240, 255, 0.15) 0%, 
+    rgba(0, 0, 0, 0.25) 50%, 
+    rgba(255, 0, 153, 0.15) 100%);
+}
+
+.collapsed .terminalHeader {
+  border-bottom: none;
+  border-radius: 8px;
+}
+
+.terminalTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: rgba(0, 240, 255, 0.9);
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
+}
+
+.terminalIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.terminalControls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.collapseIndicator {
+  color: rgba(0, 240, 255, 0.7);
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.collapsed .collapseIndicator {
+  transform: rotate(180deg);
+}
+
+.terminalHeader:hover .collapseIndicator {
+  color: rgba(0, 240, 255, 0.9);
+}
+
+.controlDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.terminalContainer:hover .controlDot.red {
+  background-color: #ff5f56;
+}
+
+.terminalContainer:hover .controlDot.yellow {
+  background-color: #ffbd2e;
+}
+
+.terminalContainer:hover .controlDot.green {
+  background-color: #27c93f;
+}
+
+.controlDot.red {
+  background-color: rgba(255, 95, 86, 0.5);
+}
+
+.controlDot.yellow {
+  background-color: rgba(255, 189, 46, 0.5);
+}
+
+.controlDot.green {
+  background-color: rgba(39, 201, 63, 0.5);
+}
+
+.terminalContent {
+  padding: 1.5rem;
+  overflow: auto;
+  position: relative;
+  max-height: 80vh;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 240, 255, 0.5) rgba(0, 0, 0, 0.2);
+}
+
+.terminalContent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 240, 255, 0.05) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  background-size: 100% 4px;
+  animation: scanLines 6s linear infinite;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+/* Custom scrollbar styles for webkit browsers */
+.terminalContent::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.terminalContent::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.terminalContent::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.5);
+  border-radius: 3px;
+}
+
+.terminalContent::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.7);
+}
+
+@keyframes scanLines {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+.promptLine {
+  display: flex;
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+.promptSymbol {
+  color: rgba(0, 240, 255, 0.9);
+  margin-right: 0.5rem;
+  font-weight: bold;
+  font-family: 'Space Mono', monospace;
+}
+
+.promptText {
+  color: white;
+  font-family: 'Space Mono', monospace;
+  overflow: hidden;
+  border-right: 0.15em solid rgba(0, 240, 255, 0.7);
+  white-space: nowrap;
+  width: 0;
+  animation: typing 2s steps(40, end) forwards,
+             blinkCaret 0.75s step-end infinite;
+}
+
+.outputText {
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Syne', sans-serif;
+  line-height: 1.6;
+  opacity: 0;
+  animation: fadeIn 0.5s 2s forwards;
+}
+
+.highlightCyan {
+  color: rgba(0, 240, 255, 0.9);
+  font-weight: 500;
+}
+
+.highlightMagenta {
+  color: rgba(255, 0, 153, 0.9);
+  font-weight: 500;
+}
+
+.highlightYellow {
+  color: rgba(255, 255, 0, 0.9);
+  font-weight: 500;
+}
+
+.commandLine {
+  font-family: 'Space Mono', monospace;
+  color: rgba(0, 240, 255, 0.8);
+  margin-bottom: 0.75rem;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+  animation-delay: calc(var(--index) * 0.2s);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blinkCaret {
+  from, to { border-color: transparent }
+  50% { border-color: rgba(0, 240, 255, 0.7) }
+}
+
+/* Para efectos de glitch ocasionales */
+.glitch {
+  position: relative;
+  animation: glitch 5s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.glitch::before {
+  color: rgba(255, 0, 153, 0.8);
+  animation: glitch-effect 3s infinite;
+}
+
+.glitch::after {
+  color: rgba(0, 240, 255, 0.8);
+  animation: glitch-effect 2s infinite;
+}
+
+@keyframes glitch-effect {
+  0% {
+    clip: rect(0, 900px, 0, 0);
+  }
+  5% {
+    clip: rect(0, 900px, 0, 0);
+  }
+  5.1% {
+    clip: rect(0, 900px, 0, 0);
+  }
+  10.5% {
+    transform: translate(-2px, -1px);
+  }
+  10.6% {
+    transform: translate(0, 0);
+  }
+  20% {
+    clip: rect(0, 900px, 0, 0);
+  }
+  100% {
+    clip: rect(0, 900px, 0, 0);
+  }
+}
+
+/* Estilos para contenido específico */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.projectCard {
+  display: block;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 6px;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.projectCard:hover {
+  border-color: rgba(0, 240, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 240, 255, 0.1);
+}
+
+.projectImage {
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(0, 240, 255, 0.1);
+}
+
+.projectTitle {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.2rem;
+  color: rgba(0, 240, 255, 0.9);
+  margin-bottom: 0.5rem;
+}
+
+.projectDescription {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.tag {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  background-color: rgba(0, 240, 255, 0.1);
+  color: rgba(0, 240, 255, 0.9);
+}
+
+.contactForm {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: 'Space Mono', monospace;
+  color: rgba(0, 240, 255, 0.9);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  font-family: 'Syne', sans-serif;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: rgba(0, 240, 255, 0.7);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
+.submitButton {
+  background: linear-gradient(90deg, 
+    rgba(0, 240, 255, 0.2) 0%, 
+    rgba(0, 240, 255, 0.3) 100%);
+  border: 1px solid rgba(0, 240, 255, 0.5);
+  color: white;
+  font-family: 'Space Mono', monospace;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submitButton:hover {
+  background: linear-gradient(90deg, 
+    rgba(0, 240, 255, 0.3) 0%, 
+    rgba(0, 240, 255, 0.4) 100%);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+.whatsappButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: linear-gradient(90deg, 
+    rgba(37, 211, 102, 0.2) 0%, 
+    rgba(37, 211, 102, 0.3) 100%);
+  border: 1px solid rgba(37, 211, 102, 0.5);
+  color: white;
+  font-family: 'Space Mono', monospace;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  margin-top: 1.5rem;
+}
+
+.whatsappButton:hover {
+  background: linear-gradient(90deg, 
+    rgba(37, 211, 102, 0.3) 0%, 
+    rgba(37, 211, 102, 0.4) 100%);
+  box-shadow: 0 0 15px rgba(37, 211, 102, 0.3);
+}
+
+.successMessage {
+  margin-top: 1rem;
+  color: #27c93f;
+  font-family: 'Space Mono', monospace;
+  background-color: rgba(39, 201, 63, 0.1);
+  padding: 0.75rem;
+  border-radius: 4px;
+  border-left: 3px solid #27c93f;
+}

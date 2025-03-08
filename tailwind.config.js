@@ -24,6 +24,11 @@ const tailwindConfig = {
         mono: ['Space Mono', 'monospace'],
         sans: ['Syne', 'sans-serif'],
       },
+      boxShadow: {
+        'glow': '0 0 10px 5px rgba(0, 240, 255, 0.6)',
+        'glow-secondary': '0 0 10px 5px rgba(255, 0, 153, 0.6)',
+        'glow-accent': '0 0 10px 5px rgba(255, 255, 0, 0.6)',
+      },
       backgroundImage: {
         'radial-gradient': 'radial-gradient(circle at center, #080808 0%, #000000 100%)',
       },

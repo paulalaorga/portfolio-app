@@ -188,21 +188,16 @@ export default function MainContentTransition({
         )}
       </AnimatePresence>
       
-      <motion.div
+      <section
         className={styles.mainContent}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ 
+        style={{ 
           opacity: contentReady ? 1 : 0,
-          y: contentReady ? 0 : 30
-        }}
-        transition={{ 
-          duration: 1.2, 
-          ease: "easeOut",
-          delay: 0.3
+          transform: contentReady ? 'translateY(0)' : 'translateY(30px)',
+          transition: 'opacity 1.2s ease-out, transform 1.2s ease-out'
         }}
       >
         {children}
-      </motion.div>
+      </section>
     </>
   )
 }
